@@ -1,11 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { TodoState } from '../../../store/reducers/todos/todoReducer';
-import { AppState } from '../../../store/store';
+import { TodoConsumer, TodoContext, TodoContextState } from '../../../context/todoContext';
 import TodoItem from '../TodoItem/TodoItem';
 import styles from './TodoList.module.scss';
 
-const getFilteredTodos = ({ todos, filter }: TodoState) => {
+const getFilteredTodos = ({ todos, filter }: TodoContextState) => {
   return todos.filter(todo => {
     return filter === 'completed'
       ? todo.isCompleted
@@ -15,17 +13,25 @@ const getFilteredTodos = ({ todos, filter }: TodoState) => {
   });
 };
 
-const mapStateToProps = (state: AppState) => ({
-  items: getFilteredTodos(state.todoState)
-});
+const TodoList: React.FC = () => {
 
-type Props = ReturnType<typeof mapStateToProps>;
-const TodoList: React.FC<Props> = ({ items }) => {
+  const renderWithContext = (context: TodoContext | null) => {
+    const { state } = context as TodoContext;
+
+    const items = getFilteredTodos(state);
+
+    return (
+      <ul className={ styles.todoList }>
+        { items.map(item => <TodoItem item={ item } key={ item.id }/>) }
+      </ul>
+    );
+  };
+
   return (
-    <ul className={ styles.todoList }>
-      { items.map(item => <TodoItem item={ item } key={ item.id }/>) }
-    </ul>
+    <TodoConsumer>
+      { renderWithContext }
+    </TodoConsumer>
   );
 };
 
-export default connect(mapStateToProps)(TodoList);
+export default TodoList;
