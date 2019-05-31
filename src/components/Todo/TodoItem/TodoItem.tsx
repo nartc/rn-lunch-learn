@@ -26,7 +26,7 @@ class TodoItem extends React.Component<Props, State> {
     this._editInputRef = createRef<HTMLInputElement>();
   }
 
-  onEnterKeyUpHandler = (id: number) => (event: React.KeyboardEvent<HTMLInputElement> | React.FocusEvent<HTMLInputElement>) => {
+  onSubmit = (id: number) => (event: React.KeyboardEvent<HTMLInputElement> | React.FocusEvent<HTMLInputElement>) => {
     const key = event.nativeEvent instanceof KeyboardEvent ? event.nativeEvent.key : '';
     const { content } = this.state;
 
@@ -54,8 +54,8 @@ class TodoItem extends React.Component<Props, State> {
                  ref={ this._editInputRef }
                  value={ content }
                  onChange={ ({ target }) => this.setState({ content: target.value }) }
-                 onKeyUp={ this.onEnterKeyUpHandler(item.id) }
-                 onBlur={ this.onEnterKeyUpHandler(item.id) }
+                 onKeyUp={ this.onSubmit(item.id) }
+                 onBlur={ this.onSubmit(item.id) }
                  className={ styles.editInput }/>
         ) : (
           <>
