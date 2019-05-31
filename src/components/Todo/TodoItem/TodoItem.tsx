@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef, RefObject } from 'react';
 import { Todo } from '../../../App';
 import styles from './TodoItem.module.scss';
 
@@ -19,16 +19,29 @@ class TodoItem extends React.Component<Props, State> {
     content: this.props.item.content
   };
 
-  onEnterKeyUpHandler = (id: number) => (event: React.KeyboardEvent<HTMLInputElement>) => {
-    const { key } = event;
+  private readonly _editInputRef: RefObject<HTMLInputElement>;
+
+  constructor(props: Props) {
+    super(props);
+    this._editInputRef = createRef<HTMLInputElement>();
+  }
+
+  onEnterKeyUpHandler = (id: number) => (event: React.KeyboardEvent<HTMLInputElement> | React.FocusEvent<HTMLInputElement>) => {
+    const key = event.nativeEvent instanceof KeyboardEvent ? event.nativeEvent.key : '';
     const { content } = this.state;
 
-    if (key !== 'Enter' || content === '' || !content) {
+    if ((key !== 'Enter' && key !== 'Escape' && key !== '') || content === '' || !content) {
       return;
     }
 
     this.props.onUpdateTodo(id, content);
     this.setState({ isEdit: false });
+  };
+
+  onItemDoubleClickHandler = () => {
+    this.setState({ isEdit: !this.props.item.isCompleted }, () => {
+      (this._editInputRef.current as HTMLInputElement).focus();
+    });
   };
 
   render() {
@@ -38,9 +51,11 @@ class TodoItem extends React.Component<Props, State> {
       <li className={ styles.todoItem }>
         { isEdit ? (
           <input type='text'
+                 ref={ this._editInputRef }
                  value={ content }
                  onChange={ ({ target }) => this.setState({ content: target.value }) }
                  onKeyUp={ this.onEnterKeyUpHandler(item.id) }
+                 onBlur={ this.onEnterKeyUpHandler(item.id) }
                  className={ styles.editInput }/>
         ) : (
           <>
@@ -51,7 +66,7 @@ class TodoItem extends React.Component<Props, State> {
                      onChange={ () => onToggle(item.id) }/>
             </label>
             <span className={ styles.item }
-                  onDoubleClick={ () => this.setState({ isEdit: !this.props.item.isCompleted }) }>{ item.content }</span>
+                  onDoubleClick={ this.onItemDoubleClickHandler }>{ item.content }</span>
             <button className={ styles.destroy } type={ 'button' } onClick={ () => onDelete(item.id) }/>
           </>
         ) }
