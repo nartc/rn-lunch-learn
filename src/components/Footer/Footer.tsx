@@ -1,19 +1,26 @@
 import * as React from 'react';
-import { FilterType } from '../../App';
+import { connect } from 'react-redux';
+import { FilterType, todoActions } from '../../store/reducers/todos/todoReducer';
+import { AppState } from '../../store/store';
 import styles from './Footer.module.scss';
 
-type Props = {
-  itemsCount: number;
-  hasCompleted: boolean;
-  currentFilter: FilterType;
-  onFilter: (type: FilterType) => void;
-  onClearCompleted: () => void;
+const mapStateToProps = (state: AppState) => ({
+  itemsCount: state.todoState.todos.filter(todo => !todo.isCompleted).length,
+  hasCompleted: state.todoState.todos.some(todo => todo.isCompleted),
+  currentFilter: state.todoState.filter
+});
+
+const mapDispatchToProps = {
+  setFilter: todoActions.setFilter,
+  clearCompleted: todoActions.clearCompleted
 };
-const Footer: React.FC<Props> = ({ itemsCount, onClearCompleted, onFilter, hasCompleted, currentFilter }) => {
+
+type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+const Footer: React.FC<Props> = ({ itemsCount, clearCompleted, setFilter, hasCompleted, currentFilter }) => {
   console.log('Footer render');
 
   const onFilterHandler = (type: FilterType) => () => {
-    onFilter(type);
+    setFilter(type);
   };
 
   const filterButtonClass = (type: FilterType) => {
@@ -38,7 +45,7 @@ const Footer: React.FC<Props> = ({ itemsCount, onClearCompleted, onFilter, hasCo
       <div className={ styles.filters }>
         <button className={ `${ styles.clearCompleted } ${ hasCompleted ? '' : styles.hide }` }
                 type={ 'button' }
-                onClick={ onClearCompleted }>
+                onClick={ clearCompleted }>
           Clear Completed
         </button>
       </div>
@@ -46,4 +53,4 @@ const Footer: React.FC<Props> = ({ itemsCount, onClearCompleted, onFilter, hasCo
   );
 };
 
-export default Footer;
+export default connect(mapStateToProps, mapDispatchToProps)(Footer);

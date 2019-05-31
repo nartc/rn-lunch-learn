@@ -1,11 +1,19 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { todoActions } from '../../../store/reducers/todos/todoReducer';
+import { AppState } from '../../../store/store';
 import styles from './TodoInput.module.scss';
 
-type Props = {
-  isAllToggled: boolean;
-  onSubmit: (content: string) => void;
-  onToggleAll: (completing: boolean) => void;
+const mapStateToProps = (state: AppState) => ({
+  isAllToggled: state.todoState.todos.every(todo => todo.isCompleted),
+});
+
+const mapDispatchToProps = {
+  addTodo: todoActions.addTodo,
+  toggleAll: todoActions.toggleAll
 };
+
+type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 type State = {
   content: string;
 };
@@ -18,7 +26,7 @@ class TodoInput extends React.Component<Props, State> {
 
   onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { checked } = event.target;
-    this.props.onToggleAll(checked);
+    this.props.toggleAll(checked);
   };
 
   onInputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +41,7 @@ class TodoInput extends React.Component<Props, State> {
       return;
     }
 
-    this.props.onSubmit(this.state.content);
+    this.props.addTodo(this.state.content);
     this.setState({ content: '' });
   };
 
@@ -56,6 +64,6 @@ class TodoInput extends React.Component<Props, State> {
       </div>
     );
   }
-};
+}
 
-export default TodoInput;
+export default connect(mapStateToProps, mapDispatchToProps)(TodoInput);

@@ -1,13 +1,17 @@
 import React from 'react';
-import { Todo } from '../../../App';
+import { connect } from 'react-redux';
+import { Todo, todoActions } from '../../../store/reducers/todos/todoReducer';
 import styles from './TodoItem.module.scss';
+
+const mapDispatchToProps = {
+  toggleTodo: todoActions.toggleTodo,
+  deleteTodo: todoActions.deleteTodo,
+  updateTodo: todoActions.updateTodo
+};
 
 type Props = {
   item: Todo;
-  onToggle: (id: number) => void;
-  onDelete: (id: number) => void;
-  onUpdateTodo: (id: number, content: string) => void;
-};
+} & typeof mapDispatchToProps;
 type State = {
   isEdit: boolean;
   content: string;
@@ -27,12 +31,12 @@ class TodoItem extends React.Component<Props, State> {
       return;
     }
 
-    this.props.onUpdateTodo(id, content);
+    this.props.updateTodo(id, content);
     this.setState({ isEdit: false });
   };
 
   render() {
-    const { item, onToggle, onDelete } = this.props;
+    const { item, toggleTodo, deleteTodo } = this.props;
     const { isEdit, content } = this.state;
     return (
       <li className={ styles.todoItem }>
@@ -48,11 +52,11 @@ class TodoItem extends React.Component<Props, State> {
               <input type="checkbox"
                      id={ `toggle_${ item.id }` }
                      className={ styles.toggleCheckbox }
-                     onChange={ () => onToggle(item.id) }/>
+                     onChange={ () => toggleTodo(item.id) }/>
             </label>
             <span className={ styles.item }
                   onDoubleClick={ () => this.setState({ isEdit: !this.props.item.isCompleted }) }>{ item.content }</span>
-            <button className={ styles.destroy } type={ 'button' } onClick={ () => onDelete(item.id) }/>
+            <button className={ styles.destroy } type={ 'button' } onClick={ () => deleteTodo(item.id) }/>
           </>
         ) }
       </li>
@@ -60,4 +64,4 @@ class TodoItem extends React.Component<Props, State> {
   }
 };
 
-export default TodoItem;
+export default connect(null, mapDispatchToProps)(TodoItem);

@@ -1,26 +1,31 @@
 import React from 'react';
-import { Todo } from '../../../App';
+import { connect } from 'react-redux';
+import { TodoState } from '../../../store/reducers/todos/todoReducer';
+import { AppState } from '../../../store/store';
 import TodoItem from '../TodoItem/TodoItem';
 import styles from './TodoList.module.scss';
 
-type Props = {
-  items: Todo[];
-  onToggle: (id: number) => void;
-  onDelete: (id: number) => void;
-  onUpdateTodo: (id: number, content: string) => void;
+const getFilteredTodos = ({ todos, filter }: TodoState) => {
+  return todos.filter(todo => {
+    return filter === 'completed'
+      ? todo.isCompleted
+      : filter === 'active'
+        ? !todo.isCompleted
+        : filter === 'all';
+  });
 };
-const TodoList: React.FC<Props> = ({ items, onToggle, onDelete, onUpdateTodo }) => {
+
+const mapStateToProps = (state: AppState) => ({
+  items: getFilteredTodos(state.todoState)
+});
+
+type Props = ReturnType<typeof mapStateToProps>;
+const TodoList: React.FC<Props> = ({ items }) => {
   return (
     <ul className={ styles.todoList }>
-      { items.map(item => (
-        <TodoItem item={ item }
-                  key={ item.id }
-                  onToggle={ onToggle }
-                  onDelete={ onDelete }
-                  onUpdateTodo={ onUpdateTodo }/>
-      )) }
+      { items.map(item => <TodoItem item={ item } key={ item.id }/>) }
     </ul>
   );
 };
 
-export default TodoList;
+export default connect(mapStateToProps)(TodoList);
