@@ -17,8 +17,6 @@ const mapDispatchToProps = {
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 const Footer: React.FC<Props> = ({ itemsCount, clearCompleted, setFilter, hasCompleted, currentFilter }) => {
-  console.log('Footer render');
-
   const onFilterHandler = (type: FilterType) => () => {
     setFilter(type);
   };

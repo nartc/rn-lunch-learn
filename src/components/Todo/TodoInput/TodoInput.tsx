@@ -46,6 +46,7 @@ class TodoInput extends React.Component<Props, State> {
   };
 
   render() {
+    console.log('input render');
     const { content } = this.state;
     const { isAllToggled } = this.props;
 
