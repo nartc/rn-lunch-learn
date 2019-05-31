@@ -1,5 +1,4 @@
 import { Reducer } from 'redux';
-import { action, ActionType } from 'typesafe-actions';
 
 export type Todo = {
   id: number;
@@ -19,15 +18,44 @@ const initialState = {
   filter: 'all'
 } as TodoState;
 
-export const ADD_TODO = 'ADD_TODO';
-export const UPDATE_TODO = 'UPDATE_TODO';
-export const DELETE_TODO = 'DELETE_TODO';
-export const TOGGLE_TODO = 'TOGGLE_TODO';
-export const TOGGLE_ALL = 'TOGGLE_ALL';
-export const CLEAR_COMPLETED = 'CLEAR_COMPLETED';
-export const SET_FILTER = 'SET_FILTER';
 
-export const todoActions = {
+export type TodoActions = {};
+
+export const todoReducer: Reducer<TodoState> = (state = initialState, action) => {
+  return state;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ export const ADD_TODO = 'ADD_TODO';
+ export const UPDATE_TODO = 'UPDATE_TODO';
+ export const DELETE_TODO = 'DELETE_TODO';
+ export const TOGGLE_TODO = 'TOGGLE_TODO';
+ export const TOGGLE_ALL = 'TOGGLE_ALL';
+ export const CLEAR_COMPLETED = 'CLEAR_COMPLETED';
+ export const SET_FILTER = 'SET_FILTER';
+
+ export const todoActions = {
   addTodo: (content: string) => action(ADD_TODO, { content }),
   updateTodo: (id: number, content: string) => action(UPDATE_TODO, { id, content }),
   deleteTodo: (id: number) => action(DELETE_TODO, { id }),
@@ -35,11 +63,8 @@ export const todoActions = {
   toggleAll: (completing: boolean) => action(TOGGLE_ALL, { completing }),
   clearCompleted: () => action(CLEAR_COMPLETED),
   setFilter: (type: FilterType) => action(SET_FILTER, { type })
-};
 
-export type TodoActions = ActionType<typeof todoActions>;
 
-export const todoReducer: Reducer<TodoState, TodoActions> = (state = initialState, action) => {
   switch (action.type) {
     case 'UPDATE_TODO': {
       const { content, id } = action.payload;
@@ -77,4 +102,4 @@ export const todoReducer: Reducer<TodoState, TodoActions> = (state = initialStat
     default:
       return state;
   }
-};
+}; **/

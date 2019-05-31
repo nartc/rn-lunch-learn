@@ -4,16 +4,7 @@ import { todoActions } from '../../../store/reducers/todos/todoReducer';
 import { AppState } from '../../../store/store';
 import styles from './TodoInput.module.scss';
 
-const mapStateToProps = (state: AppState) => ({
-  isAllToggled: state.todoState.todos.every(todo => todo.isCompleted),
-});
-
-const mapDispatchToProps = {
-  addTodo: todoActions.addTodo,
-  toggleAll: todoActions.toggleAll
-};
-
-type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+type Props = {};
 type State = {
   content: string;
 };
