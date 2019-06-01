@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import { createContext, useContext } from 'react';
 import { FilterType, Todo } from '../store/reducers/todos/todoReducer';
 
 export type TodoContextState = {
@@ -22,6 +22,8 @@ export type TodoContext = {
 }
 
 const todoContext = createContext<TodoContext | null>(null);
+
+export const useTodoContext = () => useContext(todoContext) as TodoContext;
 
 export const TodoProvider = todoContext.Provider;
 export const TodoConsumer = todoContext.Consumer;
