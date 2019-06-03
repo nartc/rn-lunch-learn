@@ -1,5 +1,5 @@
 import React from 'react';
-import { TodoConsumer, TodoContext, TodoContextState } from '../../../context/todoContext';
+import { TodoContextState, useTodoContext } from '../../../context/todoContext';
 import TodoItem from '../TodoItem/TodoItem';
 import styles from './TodoList.module.scss';
 
@@ -14,23 +14,13 @@ const getFilteredTodos = ({ todos, filter }: TodoContextState) => {
 };
 
 const TodoList: React.FC = () => {
-
-  const renderWithContext = (context: TodoContext | null) => {
-    const { state } = context as TodoContext;
-
-    const items = getFilteredTodos(state);
-
-    return (
-      <ul className={ styles.todoList }>
-        { items.map(item => <TodoItem item={ item } key={ item.id }/>) }
-      </ul>
-    );
-  };
+  const { state } = useTodoContext();
+  const items = getFilteredTodos(state);
 
   return (
-    <TodoConsumer>
-      { renderWithContext }
-    </TodoConsumer>
+    <ul className={ styles.todoList }>
+      { items.map(item => <TodoItem item={ item } key={ item.id }/>) }
+    </ul>
   );
 };
 
