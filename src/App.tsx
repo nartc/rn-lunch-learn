@@ -1,8 +1,8 @@
 import { makeStyles } from '@material-ui/styles';
 import React, { useState } from 'react';
 import Title from './components/Title/Title';
-import TodoInput from './components/Todo/TodoInput/TodoInput';
-import TodoList from './components/Todo/TodoList/TodoList';
+import TodoInput from './components/Todo/TodoInput';
+import TodoList from './components/Todo/TodoList';
 import Footer from './components/Footer/Footer';
 import { TodoContextActions, TodoProvider } from './context/todoContext';
 import { FilterType, Todo } from './store/reducers/todos/todoReducer';
