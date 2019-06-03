@@ -1,16 +1,31 @@
+import { makeStyles } from '@material-ui/styles';
 import React, { useState } from 'react';
-import styles from './App.module.scss';
 import Title from './components/Title/Title';
 import TodoInput from './components/Todo/TodoInput/TodoInput';
 import TodoList from './components/Todo/TodoList/TodoList';
 import Footer from './components/Footer/Footer';
-import { TodoContextActions, TodoContextState, TodoProvider } from './context/todoContext';
+import { TodoContextActions, TodoProvider } from './context/todoContext';
 import { FilterType, Todo } from './store/reducers/todos/todoReducer';
 
-type State = TodoContextState;
+const useStyles = makeStyles({
+  wrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100vh',
+    maxHeight: '100vh',
+    minHeight: '100vh',
+    overflow: 'hidden',
+    padding: '0 200px'
+  },
+  todoApp: {
+    position: 'relative',
+    boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1)',
+    background: 'white'
+  }
+});
 
 const App: React.FC = () => {
-
+  const classes = useStyles();
   const [todos, setTodos] = useState<Todo[]>([]);
   const [filter, setFilter] = useState<FilterType>('all');
 
@@ -45,9 +60,9 @@ const App: React.FC = () => {
 
   return (
     <TodoProvider value={ { state: { todos, filter }, actions } }>
-      <div className={ styles.wrapper }>
+      <div className={ classes.wrapper }>
         <Title/>
-        <div className={ styles.todoApp }>
+        <div className={ classes.todoApp }>
           <TodoInput/>
           <TodoList/>
           <Footer/>

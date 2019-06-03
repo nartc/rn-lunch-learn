@@ -1,9 +1,18 @@
+import { styled } from '@material-ui/styles';
 import React from 'react';
-import styles from './Title.module.scss';
+
+const StyledTitle = styled('h1')({
+  color: 'rgba(175, 47, 47, 0.15)',
+  fontWeight: 100,
+  fontSize: '8em',
+  width: '100%',
+  margin: '0.5em auto',
+  textAlign: 'center'
+});
 
 const Title: React.FC = () => {
   return (
-    <h1 className={ styles.title }>todos</h1>
+    <StyledTitle>todos</StyledTitle>
   );
 };
 
