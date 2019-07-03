@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/rn-lunch-learn/static/css/main.4c828afe.chunk.css",
+    "main.css": "/rn-lunch-learn/static/css/main.eceb786b.chunk.css",
     "main.js": "/rn-lunch-learn/static/js/main.47922585.chunk.js",
     "main.js.map": "/rn-lunch-learn/static/js/main.47922585.chunk.js.map",
     "runtime~main.js": "/rn-lunch-learn/static/js/runtime~main.519a06d9.js",
@@ -8,8 +8,8 @@
     "static/js/2.702f7834.chunk.js": "/rn-lunch-learn/static/js/2.702f7834.chunk.js",
     "static/js/2.702f7834.chunk.js.map": "/rn-lunch-learn/static/js/2.702f7834.chunk.js.map",
     "index.html": "/rn-lunch-learn/index.html",
-    "precache-manifest.9fa373350c2be1cdcbf0e03c3dea6cd5.js": "/rn-lunch-learn/precache-manifest.9fa373350c2be1cdcbf0e03c3dea6cd5.js",
+    "precache-manifest.47897ccae09f394b54b808c85bb27294.js": "/rn-lunch-learn/precache-manifest.47897ccae09f394b54b808c85bb27294.js",
     "service-worker.js": "/rn-lunch-learn/service-worker.js",
-    "static/css/main.4c828afe.chunk.css.map": "/rn-lunch-learn/static/css/main.4c828afe.chunk.css.map"
+    "static/css/main.eceb786b.chunk.css.map": "/rn-lunch-learn/static/css/main.eceb786b.chunk.css.map"
   }
 }
