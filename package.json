@@ -1,7 +1,7 @@
 {
 	"name": "react-todo",
 	"version": "0.1.0",
-	"homepage": "https://nartc.github.io/rn-ll",
+	"homepage": "https://nartc.github.io/rn-lunch-learn",
 	"private": true,
 	"dependencies": {
 		"@types/jest": "24.0.13",
